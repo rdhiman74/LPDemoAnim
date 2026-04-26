@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LaunchPath AI — Saved Items</title>
+<style>
+:root{
+  --bg-body:#16202f; --bg-shell:#1f2a3d; --bg-card:#2c3a52; --border:#3a4b65;
+  --text:#f3f4f6; --muted:#c2c7d1; --accent:#22d3ee;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:radial-gradient(circle at top,#16202f 0,#0b1120 60%,#020617 100%);color:var(--text);padding:24px}
+.page{max-width:1120px;margin:0 auto}
+.lp-header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:22px}
+.brand-lockup{display:flex;align-items:center;gap:12px}
+.brand-mark{width:40px;height:40px;border-radius:999px;background:radial-gradient(circle at 30% 0,#22d3ee 0,#0ea5e9 40%,#111827 95%);box-shadow:0 0 0 2px rgba(56,189,248,.6),0 14px 30px rgba(15,23,42,.9)}
+.brand-text-main{font-size:1.05rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700}
+.brand-text-sub{font-size:.86rem;color:#cbd5f5}
+.lp-nav{display:flex;align-items:center;gap:12px}
+.lp-nav-link{padding:10px 16px;border-radius:999px;border:1px solid rgba(56,189,248,.45);background:rgba(15,23,42,.55);color:rgba(224,242,254,.86);text-decoration:none;font-size:.86rem;white-space:nowrap}
+.lp-nav-link:hover{border-color:rgba(56,189,248,.75);background:rgba(15,23,42,.75)}
+.shell{background:var(--bg-shell);border-radius:24px;padding:22px;border:1px solid var(--border);box-shadow:0 20px 56px rgba(0,0,0,.65)}
+h1{margin:0 0 6px;font-size:1.5rem}
+.sub{margin:0 0 18px;color:var(--muted);font-size:.92rem}
+.card{background:var(--bg-card);border-radius:18px;border:1px solid var(--border);padding:16px}
+.table{width:100%;border-collapse:collapse;font-size:.88rem}
+.table th,.table td{padding:10px 8px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left}
+.table th{font-size:.76rem;text-transform:uppercase;letter-spacing:.14em;color:var(--muted)}
+.empty{color:var(--muted);font-size:.9rem}
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="lp-header">
+    <div class="brand-lockup">
+      <div class="brand-mark"></div>
+      <div>
+        <div class="brand-text-main">LAUNCHPATH AI</div>
+        <div class="brand-text-sub">Plan Smarter · Apply Better</div>
+      </div>
+    </div>
+    <nav class="lp-nav">
+      <a class="lp-nav-link" href="index.html">Home</a>
+      <a class="lp-nav-link" href="student-workplace.html">Student Workspace</a>
+      <a class="lp-nav-link" href="student-login.html">Sign In</a>
+    </nav>
+  </header>
+
+  <main class="shell">
+    <h1>Saved Items</h1>
+    <p class="sub">Recovery placeholder page so saved-item links resolve correctly in GitHub and Netlify builds.</p>
+    <div class="card">
+      <table class="table">
+        <thead>
+          <tr><th>Type</th><th>Example</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>College</td><td>Northeastern University</td><td>Saved</td></tr>
+          <tr><td>Essay</td><td>Common App Personal Statement</td><td>Saved</td></tr>
+          <tr><td>Social</td><td>TikTok acceptance post</td><td>Saved</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+</div>
+</body>
+</html>

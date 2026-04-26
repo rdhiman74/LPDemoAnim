@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>LaunchPath AI — College Readiness Platform</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="LaunchPath AI combines college matching, AI essay coaching, ROI analysis, scattergrams, and social branding into one platform for high school juniors and seniors." />
+  <style>
+    :root {
+      --bg-main: #020617;
+      --bg-card: #0b1220;
+      --accent-blue: #38bdf8;
+      --accent-purple: #a855f7;
+      --accent-pink: #f973c9;
+      --accent-gold: #facc15;
+      --accent-cyan: #22d3ee;
+      --text-main: #f9fafb;
+      --text-muted: #9ca3af;
+      --text-sub: #cbd5f5;
+      --border-subtle: #1f2937;
+      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-sans);
+      background: radial-gradient(circle at top left, #1d2342 0, #020617 55%, #000 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+    }
+
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 24px 20px 0;
+    }
+
+    /* ── HEADER ── */
+    .lp-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+    .brand-lockup { display: flex; align-items: center; gap: 12px; }
+    .brand-mark {
+      width: 40px; height: 40px; border-radius: 999px;
+      background: radial-gradient(circle at 30% 0, #22d3ee 0, #0ea5e9 40%, #111827 95%);
+      box-shadow: 0 0 0 2px rgba(56,189,248,.6), 0 14px 30px rgba(15,23,42,.9);
+      flex-shrink: 0;
+    }
+    .brand-text-main {
+      font-size: 1.05rem; letter-spacing: .14em;
+      text-transform: uppercase; font-weight: 700;
+    }
+    .brand-text-sub { font-size: .82rem; color: var(--text-sub); margin-top: 2px; }
+    .lp-header-right { display: flex; align-items: center; gap: 10px; }
+    .lp-nav-link {
+      padding: 9px 16px; border-radius: 999px;
+      border: 1px solid rgba(56,189,248,.45);
+      background: rgba(15,23,42,.55);
+      color: rgba(224,242,254,.86);
+      text-decoration: none; font-size: .86rem;
+      white-space: nowrap;
+      transition: border-color .15s, background .15s;
+    }
+    .lp-nav-link:hover { border-color: rgba(56,189,248,.75); background: rgba(15,23,42,.75); }
+    .lp-nav-link.active { border-color: rgba(56,189,248,.9); box-shadow: 0 0 0 3px rgba(56,189,248,.1) inset; }
+    .lp-nav-link.signin { border-color: rgba(148,163,184,.45); }
+    .lp-nav-link.cta {
+      border-color: rgba(34,211,238,.8);
+      background: rgba(34,211,238,.1);
+      color: #e0f9ff; font-weight: 600;
+    }
+    .lp-nav-link.cta:hover { background: rgba(34,211,238,.18); }
+    
+    .lp-nav-link.partner {
+      border-color: rgba(168,85,247,.5);
+      color: #e9d5ff;
+      background: rgba(88,28,135,.08);
+    }
+    .lp-nav-link.partner:hover {
+      border-color: rgba(168,85,247,.72);
+      background: rgba(168,85,247,.12);
+      color: #f3e8ff;
+    }
+
+    @media (max-width: 840px) {
+      .lp-header { flex-direction: column; align-items: flex-start; }
+      .lp-header-right { width: 100%; flex-wrap: wrap; }
+    }
+
+    /* ── HERO ── */
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 48px;
+      align-items: center;
+      margin-bottom: 56px;
+    }
+    .hero-eyebrow {
+      font-size: .78rem; text-transform: uppercase;
+      letter-spacing: .2em; color: var(--accent-cyan);
+      margin-bottom: 14px; display: flex;
+      align-items: center; gap: 8px;
+    }
+    .hero-eyebrow::before {
+      content: "";
+      display: inline-block; width: 24px; height: 1.5px;
+      background: var(--accent-cyan); flex-shrink: 0;
+    }
+    .hero-title {
+      font-size: clamp(2rem, 2.6vw + 1.2rem, 2.8rem);
+      line-height: 1.07; margin-bottom: 18px;
+      font-weight: 700;
+    }
+    .hero-title span.blue { color: #60a5fa; }
+    .hero-title span.purple { color: #c4b5fd; }
+    .hero-title span.pink { color: #f9a8d4; }
+
+    .hero-sub {
+      font-size: .97rem; color: var(--text-muted);
+      line-height: 1.65; margin-bottom: 28px;
+      max-width: 520px;
+    }
+
+    /* Mission + Problem */
+    .hero-mission {
+      font-size: .97rem; color: #e2e8f0;
+      line-height: 1.65; margin-bottom: 22px;
+      max-width: 520px;
+    }
+    .hero-mission strong { color: var(--accent-cyan); font-weight: 700; }
+
+    .problem-banner {
+      background: rgba(15,23,42,.7);
+      border: 1px solid rgba(56,189,248,.2);
+      border-left: 3px solid var(--accent-cyan);
+      border-radius: 14px; padding: 14px 18px;
+      max-width: 520px;
+    }
+    .problem-label {
+      font-size: .7rem; text-transform: uppercase;
+      letter-spacing: .16em; color: var(--accent-cyan);
+      font-weight: 700; margin-bottom: 6px;
+    }
+    .problem-text {
+      font-size: .88rem; color: var(--text-muted);
+      line-height: 1.6; margin: 0;
+    }
+
+    /* ── VIDEO COLUMN ── */
+    .video-col { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+    .video-label-top {
+      width: 100%; text-align: right;
+      font-size: .72rem; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: .16em;
+    }
+    .video-wrapper {
+      width: 100%; max-width: 420px;
+      aspect-ratio: 16 / 10;
+      position: relative;
+      background: #020617;
+      border: 1px solid rgba(34,211,238,.3);
+      border-radius: 20px; overflow: hidden;
+      box-shadow: 0 24px 60px rgba(0,0,0,.8), 0 0 24px rgba(34,211,238,.1);
+    }
+    .video-wrapper video {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+    }
+    .video-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(2,6,23,.15) 0%, rgba(2,6,23,.85) 100%);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      cursor: pointer; z-index: 5; padding: 20px;
+      text-align: center;
+      transition: background .2s;
+    }
+    .video-overlay:hover { background: linear-gradient(to bottom, rgba(2,6,23,.1) 0%, rgba(2,6,23,.75) 100%); }
+    .play-btn {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: rgba(34,211,238,.12);
+      border: 1.5px solid var(--accent-cyan);
+      display: flex; align-items: center; justify-content: center;
+      backdrop-filter: blur(8px); margin-bottom: 14px;
+      transition: transform .2s, background .2s;
+    }
+    .video-overlay:hover .play-btn { transform: scale(1.1); background: rgba(34,211,238,.2); }
+    .play-icon { color: var(--accent-cyan); font-size: 24px; margin-left: 3px; }
+    .video-tag { font-size: 10px; letter-spacing: .2em; color: var(--accent-cyan); font-weight: 700; text-transform: uppercase; }
+    .video-title { font-size: .95rem; color: #fff; margin-top: 6px; font-weight: 600; }
+
+    @media (max-width: 860px) {
+      .hero { grid-template-columns: 1fr; gap: 32px; }
+      .video-col { align-items: flex-start; }
+      .video-wrapper { max-width: 100%; aspect-ratio: 16 / 9; }
+      .video-label-top { text-align: left; }
+    }
+
+    /* ── FEATURE CARDS ── */
+    .features-section { margin-bottom: 56px; }
+    .section-heading {
+      font-size: 1.25rem; font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .section-sub {
+      font-size: .9rem; color: var(--text-muted);
+      margin-bottom: 24px; line-height: 1.5;
+    }
+    .grid-cards {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+    @media (max-width: 860px) { .grid-cards { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 520px) { .grid-cards { grid-template-columns: 1fr; } }
+
+    .card {
+      background: var(--bg-card);
+      border-radius: 18px; padding: 18px 16px 20px;
+      border: 1px solid var(--border-subtle);
+      box-shadow: 0 16px 36px rgba(0,0,0,.6);
+      transition: border-color .2s, transform .2s;
+    }
+    .card:hover { border-color: rgba(56,189,248,.3); transform: translateY(-2px); }
+    .card-icon { font-size: 1.4rem; margin-bottom: 10px; }
+    .card-eyebrow {
+      font-size: .7rem; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: .16em;
+      margin-bottom: 4px;
+    }
+    .card-title {
+      font-size: .95rem; font-weight: 600;
+      margin-bottom: 8px; color: #e5e7eb;
+    }
+    .card-body { font-size: .82rem; color: var(--text-muted); line-height: 1.55; }
+
+    /* ── PRICING ── */
+    .pricing-section { margin-bottom: 60px; }
+    .pricing-heading { font-size: 1.25rem; font-weight: 700; margin-bottom: 6px; }
+    .pricing-sub { font-size: .9rem; color: var(--text-muted); margin-bottom: 28px; }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px; max-width: 760px;
+    }
+    @media (max-width: 600px) { .pricing-grid { grid-template-columns: 1fr; } }
+
+    .pricing-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px; padding: 22px 22px 20px;
+      box-shadow: 0 16px 40px rgba(0,0,0,.6);
+    }
+    .pricing-card.featured { border-color: rgba(56,189,248,.45); }
+    .pricing-label { font-size: .72rem; text-transform: uppercase; letter-spacing: .16em; color: var(--text-muted); margin-bottom: 6px; }
+    .pricing-title { font-size: 1.05rem; font-weight: 700; margin-bottom: 10px; }
+    .pricing-price {
+      font-size: 2.2rem; font-weight: 700;
+      color: var(--accent-cyan); margin-bottom: 16px; line-height: 1;
+    }
+    .pricing-price span { font-size: .95rem; color: var(--text-muted); font-weight: 400; }
+    .pricing-list {
+      list-style: none; padding: 0;
+      margin: 0 0 20px; display: flex;
+      flex-direction: column; gap: 8px;
+    }
+    .pricing-list li {
+      font-size: .87rem; color: var(--text-sub);
+      display: flex; align-items: flex-start; gap: 8px;
+    }
+    .pricing-list li::before {
+      content: "✓"; color: #22c55e;
+      font-size: .85rem; flex-shrink: 0; margin-top: 1px;
+    }
+    .pricing-cta {
+      display: block; text-align: center;
+      padding: 12px 20px; border-radius: 999px;
+      background: linear-gradient(135deg, #22d3ee, #38bdf8);
+      color: #04131f; font-weight: 700; font-size: .9rem;
+      text-decoration: none;
+      transition: filter .15s, transform .1s;
+    }
+    .pricing-cta:hover { filter: brightness(1.07); transform: translateY(-1px); }
+    .pricing-cta.school {
+      background: transparent;
+      border: 1px solid rgba(168,85,247,.6);
+      color: #f3e8ff;
+    }
+    .pricing-cta.school:hover { background: rgba(168,85,247,.1); }
+
+    /* ── FAQ BUTTON ── */
+    .faq-trigger-wrapper { margin-top: 24px; }
+    .faq-button {
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      border-radius: 999px; padding: 10px 18px;
+      color: var(--text-muted); font-size: .86rem;
+      cursor: pointer; font-family: var(--font-sans);
+      transition: border-color .15s, color .15s;
+    }
+    .faq-button:hover { border-color: rgba(56,189,248,.5); color: var(--text-main); }
+
+    /* ── FAQ MODAL ── */
+    .faq-backdrop {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,.7); z-index: 90;
+      backdrop-filter: blur(4px);
+    }
+    .faq-modal {
+      display: none; position: fixed; inset: 0;
+      align-items: center; justify-content: center;
+      z-index: 100; padding: 20px;
+    }
+    .faq-modal-inner {
+      background: #0b1220;
+      border: 1px solid #1f2937;
+      border-radius: 20px; max-width: 640px;
+      width: 100%; padding: 24px 24px 20px;
+      box-shadow: 0 24px 60px rgba(0,0,0,.85);
+      pointer-events: auto; max-height: 80vh;
+      display: flex; flex-direction: column;
+    }
+    .faq-modal-header {
+      display: flex; justify-content: space-between;
+      align-items: center; margin-bottom: 16px;
+      flex-shrink: 0;
+    }
+    .faq-modal-title { font-size: 1rem; font-weight: 600; }
+    .faq-close {
+      background: none; border: none;
+      color: var(--text-muted); font-size: 1.3rem;
+      cursor: pointer; line-height: 1;
+    }
+    .faq-modal-body { font-size: .87rem; color: #e5e7eb; overflow-y: auto; }
+    .faq-q { font-weight: 600; margin-top: 14px; margin-bottom: 4px; color: var(--accent-cyan); }
+    .faq-q:first-child { margin-top: 0; }
+    .faq-a { margin: 0 0 6px; color: var(--text-sub); line-height: 1.6; }
+
+    /* ── FOOTER ── */
+    .site-footer {
+      border-top: 1px solid var(--border-subtle);
+      padding: 28px 20px 32px;
+      margin-top: 0;
+    }
+    .footer-inner {
+      max-width: 1180px; margin: 0 auto;
+      display: flex; justify-content: space-between;
+      align-items: center; gap: 16px; flex-wrap: wrap;
+    }
+    .footer-brand { font-size: .82rem; color: #4b5563; }
+    .footer-brand strong { color: var(--text-muted); }
+    .footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
+    .footer-links a {
+      font-size: .82rem; color: #4b5563;
+      text-decoration: none;
+      transition: color .15s;
+    }
+    .footer-links a:hover { color: var(--text-muted); }
+  </style>
+</head>
+<body>
+
+  <div class="page">
+
+    <!-- ── HEADER ── -->
+    <header class="lp-header">
+  <div class="brand-lockup">
+    <div class="brand-mark"></div>
+    <div class="brand-text">
+      <div class="brand-text-main">LAUNCHPATH AI</div>
+      <div class="brand-text-sub">Plan Smarter · Apply Better</div>
+    </div>
+  </div>
+  <div class="lp-header-right">
+    <a class="lp-nav-link active" href="index.html">Home</a>
+    <a class="lp-nav-link" href="student-workplace.html">Student Workspace</a>
+    <a class="lp-nav-link partner" href="partner.html">Partner</a>
+    <a class="lp-nav-link signin" href="student-login.html">Sign In</a>
+  </div>
+</header>
+
+    <!-- ── HERO ── -->
+    <section class="hero">
+      <div class="hero-left">
+        <div class="hero-eyebrow">For High School Juniors &amp; Seniors</div>
+        <h1 class="hero-title">
+          One workspace for <span class="blue">essays</span>,
+          <span class="purple">college match</span>, and
+          <span class="pink">your future.</span>
+        </h1>
+        <p class="hero-sub">
+          LaunchPath AI is the first platform to combine AI essay coaching, college matching,
+          financial ROI analysis, scattergrams, and social branding in one place —
+          everything you need to apply smarter, choose better, and launch with confidence.
+        </p>
+
+        <p class="hero-mission">
+          LaunchPath AI is designed to be the default personal guidance system for every student —
+          a single, unified <strong>One-Stop Shop</strong> for the entire college journey.
+        </p>
+
+        <div class="problem-banner">
+          <div class="problem-label">The Core Problem</div>
+          <p class="problem-text">
+            Today's college application journey is fragmented, stressful, and inefficient
+            for families and centers alike. LaunchPath changes that.
+          </p>
+        </div>
+      </div>
+
+      <!-- VIDEO -->
+      <div class="video-col">
+        <div class="video-label-top">Watch the student journey</div>
+        <div class="video-wrapper">
+          <!--
+            SETUP: Place LP_Student_Journey.mp4 in the same folder as this index.html
+            The video will autoplay on click. Poster image shows before play.
+          -->
+          <video
+            id="lp-journey-video"
+            playsinline
+            preload="metadata"
+            style="width:100%;height:100%;object-fit:cover;display:block;"
+          >
+            <source src="LP_Student_Journey.mp4" type="video/mp4" />
+          </video>
+
+          <div class="video-overlay" id="video-overlay" onclick="playLPVideo()">
+            <div class="play-btn">
+              <span class="play-icon">▶</span>
+            </div>
+            <div class="video-tag">Intelligence, Illuminated</div>
+            <div class="video-title">Watch the Student Journey</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── FEATURE CARDS ── -->
+    <section class="features-section">
+      <h2 class="section-heading">Everything you need, in one place</h2>
+      <p class="section-sub">
+        Four powerful tools that work together — from your first college search to your final essay draft.
+      </p>
+
+      <div class="grid-cards">
+        <article class="card">
+          <div class="card-icon">✍️</div>
+          <div class="card-eyebrow">Essay Studio</div>
+          <div class="card-title">Write your story</div>
+          <div class="card-body">
+            AI-powered coaching helps you brainstorm, outline, draft, and polish your essays — while keeping your voice front and center.
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-icon">🎯</div>
+          <div class="card-eyebrow">College Match &amp; Scattergrams</div>
+          <div class="card-title">Find your best-fit schools</div>
+          <div class="card-body">
+            Intelligent matching, real scattergram data, and What-If scenarios help you build a smart, balanced college list.
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-icon">📱</div>
+          <div class="card-eyebrow">Social Media Studio</div>
+          <div class="card-title">Control your narrative</div>
+          <div class="card-body">
+            Build a polished digital presence with templates for bios, college announcement posts, and outreach messages.
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-icon">💰</div>
+          <div class="card-eyebrow">ROI &amp; Financial Fit</div>
+          <div class="card-title">Know what college really costs</div>
+          <div class="card-body">
+            Side-by-side cost comparisons, 5-year earnings projections, and a Financial Fit Score so you choose smart — not just prestigious.
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ── PRICING ── -->
+    <section class="pricing-section">
+      <h2 class="pricing-heading">Simple, transparent pricing</h2>
+      <p class="pricing-sub">
+        One plan for students. Custom options for schools and SAT prep centers.
+      </p>
+
+      <div class="pricing-grid">
+        <div class="pricing-card featured">
+          <div class="pricing-label">For individual students</div>
+          <div class="pricing-title">Student Plan</div>
+          <div class="pricing-price">$20<span> / month</span></div>
+          <ul class="pricing-list">
+            <li>Full access to Essay Studio with AI coaching</li>
+            <li>College Match, What-If analysis &amp; Scattergrams</li>
+            <li>ROI Calculator &amp; Financial Fit Score</li>
+            <li>Social Media Studio</li>
+            <li>Student Workspace — all tools in one dashboard</li>
+          </ul>
+          <a href="student-profile.html" class="pricing-cta">Get started today →</a>
+        </div>
+
+        <div class="pricing-card">
+          <div class="pricing-label">For schools, districts &amp; SAT centers</div>
+          <div class="pricing-title">Partner Plan</div>
+          <div class="pricing-price">Custom<span> pricing</span></div>
+          <ul class="pricing-list">
+            <li>Dedicated center dashboard with student tracking</li>
+            <li>Traffic light risk &amp; engagement monitoring</li>
+            <li>Revenue share for SAT prep centers</li>
+            <li>Counselor &amp; admin tools</li>
+            <li>Bulk onboarding &amp; priority support</li>
+          </ul>
+          <a href="mailto:hello@launchpathai.com" class="pricing-cta school">Contact our team →</a>
+        </div>
+      </div>
+
+      <div class="faq-trigger-wrapper">
+        <button class="faq-button" type="button" onclick="openFaqModal()">
+          FAQ: How LaunchPath AI uses AI safely and ethically
+        </button>
+      </div>
+    </section>
+
+  </div><!-- end .page -->
+
+  <!-- ── FAQ MODAL ── -->
+  <div id="faq-backdrop" class="faq-backdrop"></div>
+  <div id="faq-modal" class="faq-modal">
+    <div class="faq-modal-inner">
+      <div class="faq-modal-header">
+        <div class="faq-modal-title">Essay Studio &amp; AI Integrity FAQ</div>
+        <button class="faq-close" type="button" onclick="closeFaqModal()">×</button>
+      </div>
+      <div class="faq-modal-body">
+        <p class="faq-q">Does LaunchPath AI write essays for students?</p>
+        <p class="faq-a">No. Students provide their own ideas, stories, and drafts. LaunchPath AI acts as a coach — helping with structure, clarity, and grammar — not as a ghostwriter.</p>
+
+        <p class="faq-q">What does the AI actually help with?</p>
+        <p class="faq-a">It helps students brainstorm topics, organize outlines, improve wording, and suggest edits while keeping their voice at the center of every essay.</p>
+
+        <p class="faq-q">How do you make sure the essay still sounds like the student?</p>
+        <p class="faq-a">We encourage students to write multiple samples so the system can maintain consistent tone and flag sections that feel overly advanced or off-voice.</p>
+
+        <p class="faq-q">Is this allowed by colleges?</p>
+        <p class="faq-a">Yes. LaunchPath AI is designed as an assistive tool — similar to a writing tutor or Grammarly. Students remain the authors of their essays.</p>
+
+        <p class="faq-q">What happens to my child's data and essays?</p>
+        <p class="faq-a">Essays and student data stay private within LaunchPath AI. We do not share essays with colleges, do not sell student data, and do not use individual essays to train AI models.</p>
+
+        <p class="faq-q">Is this fair to students who don't use it?</p>
+        <p class="faq-a">LaunchPath AI is designed to level the playing field — giving every student access to the kind of guidance that currently costs $150–$300 per hour from a private counselor. Students remain the authors of their work.</p>
+
+        <p class="faq-q">Can counselors and parents feel confident about integrity?</p>
+        <p class="faq-a">Yes. The platform is built to support honest storytelling, not replace it. We focus on teaching stronger writing skills, not generating generic essays.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <strong>LaunchPath AI</strong> &copy; 2026. All rights reserved.
+      </div>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+        <a href="mailto:hello@launchpathai.com">Contact Us</a>
+        <a href="student-login.html">Sign In</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ── Video player ── */
+    function playLPVideo() {
+      var video = document.getElementById('lp-journey-video');
+      var overlay = document.getElementById('video-overlay');
+      if (!video || !overlay) return;
+      overlay.style.display = 'none';
+      video.controls = true;
+      video.play().catch(function() {
+        overlay.style.display = 'flex';
+      });
+    }
+
+    /* ── FAQ modal ── */
+    function openFaqModal() {
+      document.getElementById('faq-backdrop').style.display = 'block';
+      document.getElementById('faq-modal').style.display = 'flex';
+    }
+    function closeFaqModal() {
+      document.getElementById('faq-backdrop').style.display = 'none';
+      document.getElementById('faq-modal').style.display = 'none';
+    }
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeFaqModal();
+    });
+    document.getElementById('faq-backdrop').addEventListener('click', closeFaqModal);
+
+    /* ── Active nav ── */
+    (function() {
+      const p = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+      document.querySelectorAll('.lp-header-right a').forEach(function(a) {
+        const href = (a.getAttribute('href') || '').toLowerCase();
+        if (href === p) a.classList.add('active');
+      });
+    })();
+  </script>
+
+</body>
+</html>
